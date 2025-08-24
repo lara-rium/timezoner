@@ -8,6 +8,7 @@ defmodule Timezoner.Interactions.Timezone do
   alias Timezoner.Component
   alias Timezoner.Error
   alias Timezoner.InteractionResponse
+  alias Timezoner.Repo
 
   @impl Timezoner.Interactions.Behaviour
   def name, do: "timezone"
@@ -36,15 +37,17 @@ defmodule Timezoner.Interactions.Timezone do
     response =
       city
       |> Geocoder.call()
-      |> response()
+      |> response(interaction.user.id)
 
     interaction
     |> Interaction.create_response(response)
     |> Error.handle()
   end
 
-  def response({:ok, %Geocoder.Coords{lat: lat, lon: lon}}) do
+  def response({:ok, %Geocoder.Coords{lat: lat, lon: lon}}, user_id) do
     {:ok, tz} = TzWorld.timezone_at({lon, lat})
+
+    Repo.Timezone.insert(user_id, tz)
 
     InteractionResponse.channel_message_with_source([
       Component.section("https://cdn.lara.lv/emoji/partying-face.webp", [

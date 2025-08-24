@@ -7,6 +7,7 @@ defmodule Timezoner.Main do
         Geocoder.Supervisor,
         Timezoner.Consumer,
         Timezoner.DatetimeParser,
+        Timezoner.Repo,
         Timezoner.StatusUpdater,
         Timezoner.TzWorldUpdater,
         TzWorld.Backend.DetsWithIndexCache

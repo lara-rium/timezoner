@@ -10,6 +10,16 @@
         "clear": true,
         "focus": true
       }
+    },
+    {
+      "label": "postgres",
+      "type": "shell",
+      "command": "postgres -D timezoner_repo",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "focus": true
+      }
     }
   ]
 }

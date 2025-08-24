@@ -1,3 +1,4 @@
+.vscode/settings.json
 *.ez
 /_build/
 /.elixir_ls/
@@ -7,5 +8,5 @@
 /doc/
 /tmp/
 erl_crash.dump
-timezoner-*.tar
 priv/.venv
+timezoner-*.tar
