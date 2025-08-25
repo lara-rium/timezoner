@@ -29,6 +29,7 @@ defmodule Timezoner.MixProject do
       {:nimble_pool, "~> 1.1"},
       {:nostrum, "~> 0.10"},
       {:postgrex, ">= 0.0.0"},
+      {:timex, "~> 3.0"},
       {:tz_world, "~> 1.3"}
     ]
   end

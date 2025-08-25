@@ -14,12 +14,22 @@
     {
       "label": "postgres",
       "type": "shell",
-      "command": "postgres -D timezoner_repo",
+      "command": "postgres -D /opt/homebrew/var/postgresql@17",
       "problemMatcher": [],
       "presentation": {
         "clear": true,
         "focus": true
       }
-    }
+    },
+    {
+      "label": "credo",
+      "type": "shell",
+      "command": "mix credo --strict",
+      "problemMatcher": [],
+      "presentation": {
+        "clear": true,
+        "focus": true
+      }
+    } 
   ]
 }

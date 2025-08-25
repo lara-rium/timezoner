@@ -13,6 +13,7 @@ defmodule Timezoner.Consumer do
     Interactions.handle(interaction)
   end
 
+  # TODO: handle message edits
   def handle_event({:MESSAGE_CREATE, message, _}) do
     Timezoner.MessageCreate.handle(message)
   end

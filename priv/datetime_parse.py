@@ -36,10 +36,10 @@ def write(data):
     os.write(4, data_length + data)
 
 
-def parse(content, tz):
+def parse(content):
     return search_dates(
         content,
-        settings={"TIMEZONE": tz, "CACHE_SIZE_LIMIT": 1, "DEFAULT_LANGUAGES": ["en"]},
+        settings={"CACHE_SIZE_LIMIT": 1, "DEFAULT_LANGUAGES": ["en"]},
         detect_languages_function=detect_languages,
     )
 
@@ -62,9 +62,8 @@ if __name__ == "__main__":
         length = int.from_bytes(read(4), "big")
         data = read(length)
 
-        message = json.loads(data)
+        content = data.decode("utf-8")
+        results = parse(content)
 
-        results = parse(message.get("content"), message.get("tz"))
         response = serialize(results).encode("utf-8")
-
         write(response)

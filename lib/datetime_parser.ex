@@ -12,11 +12,9 @@ defmodule Timezoner.DatetimeParser do
     }
   end
 
-  def parse(content, tz) do
-    payload = Jason.encode!(%{content: content, tz: tz})
-
+  def parse(content) do
     NimblePool.checkout!(__MODULE__, :checkout, fn _, port ->
-      send_command(port, payload)
+      send_command(port, content)
     end)
   end
 
