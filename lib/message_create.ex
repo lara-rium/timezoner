@@ -27,6 +27,8 @@ defmodule Timezoner.MessageCreate do
         &is_nil(&1)
       )
 
+    grain = date_body["value"]["grain"]
+
     dates =
       Enum.map(values, fn value ->
         value
@@ -34,9 +36,27 @@ defmodule Timezoner.MessageCreate do
         |> DateTime.from_naive!(tz)
       end)
 
-    timestamps = Enum.map_join(dates, "-", fn date -> "<t:#{DateTime.to_unix(date)}>" end)
+    # TODO: multiple dates are all fucked up like "1pm 2pm" is "1pm (<t (<t:1756810800:t>):1756807200:t>) 2pm"
+    timestamps =
+      Enum.map_join(dates, "-", fn date ->
+        format = format(date, grain, tz)
+
+        "<t:#{DateTime.to_unix(date)}:#{format}>"
+      end)
 
     {before_end, after_end} = String.split_at(acc, date_body["end"])
     before_end <> " (#{timestamps})" <> after_end
+  end
+
+  defp format(date, grain, tz) do
+    case {DateTime.to_date(date) ==
+            tz
+            |> DateTime.now!()
+            |> DateTime.to_date(), grain} do
+      {true, "second"} -> "T"
+      {true, _} -> "t"
+      {false, grain} when grain in ["hour", "minute", "second"] -> "f"
+      {false, _} -> "D"
+    end
   end
 end
