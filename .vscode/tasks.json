@@ -2,34 +2,47 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "run",
-      "type": "shell",
       "command": "iex -S mix",
-      "problemMatcher": [],
+      "label": "run",
       "presentation": {
         "clear": true,
         "focus": true
-      }
+      },
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "postgres",
-      "type": "shell",
       "command": "postgres -D /opt/homebrew/var/postgresql@17",
-      "problemMatcher": [],
+      "label": "postgres",
       "presentation": {
         "clear": true,
         "focus": true
-      }
+      },
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "credo",
-      "type": "shell",
-      "command": "mix credo --strict",
-      "problemMatcher": [],
+      "command": "stack exec duckling-example-exe",
+      "label": "duckling",
       "presentation": {
         "clear": true,
         "focus": true
-      }
-    } 
+      },
+      "options": {
+        "cwd": "priv/duckling"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "mix credo --strict",
+      "label": "credo",
+      "presentation": {
+        "clear": true,
+        "focus": true
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    }
   ]
 }

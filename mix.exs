@@ -26,7 +26,6 @@ defmodule Timezoner.MixProject do
       {:exsync, "~> 0.4", only: :dev},
       {:geocoder, "~> 2.2"},
       {:httpoison, "~> 2.2"},
-      {:nimble_pool, "~> 1.1"},
       {:nostrum, "~> 0.10"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},

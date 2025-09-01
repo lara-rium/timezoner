@@ -2,11 +2,12 @@ defmodule Timezoner.Main do
   use Application
 
   def start(_, _) do
+    HTTPoison.start()
+
     Supervisor.start_link(
       [
         Geocoder.Supervisor,
         Timezoner.Consumer,
-        Timezoner.DatetimeParser,
         Timezoner.Repo,
         Timezoner.StatusUpdater,
         Timezoner.TzWorldUpdater,
