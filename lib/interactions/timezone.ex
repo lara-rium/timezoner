@@ -59,15 +59,21 @@ defmodule Timezoner.Interactions.Timezone do
     ])
   end
 
-  def response({:error, _}) do
-    InteractionResponse.channel_message_with_source([
+  def response({:error, _}, _) do
+    title_section =
       Component.section("https://cdn.lara.lv/emoji/pensive.webp", [
         Component.text("# City not found"),
-        Component.text("I couldn't find that city, please make sure you spelled it correctly."),
-        Component.text(
-          "-# If you spelled it right, make sure the city that you're living in actually exists."
-        )
+        Component.text("I couldn't find that city, please make sure you spelled it correctly.")
       ])
+
+    footer_text =
+      Component.text(
+        "-# If you spelled it right, make sure the city that you're living in actually exists."
+      )
+
+    InteractionResponse.channel_message_with_source([
+      title_section,
+      footer_text
     ])
   end
 end
