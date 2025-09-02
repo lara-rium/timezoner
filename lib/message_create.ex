@@ -1,5 +1,6 @@
 defmodule Timezoner.MessageCreate do
   alias Nostrum.Api.Message
+  alias Timezoner.Component
   alias Timezoner.Duckling
   alias Timezoner.Error
   alias Timezoner.Repo
@@ -7,20 +8,49 @@ defmodule Timezoner.MessageCreate do
   def handle(message) do
     parsed = Duckling.parse(message.content)
 
-    if parsed != [] do
-      # TODO: handle users with no timezone set
-      # TODO: delete original message
-      tz = Repo.Timezone.get(message.author.id).timezone
+    handle(message, parsed)
+  end
 
-      content =
-        parsed
-        |> Enum.sort_by(& &1["end"], :desc)
-        |> Enum.reduce(message.content, &add_timestamp(&1, &2, tz))
+  def handle(_, []), do: :ok
 
-      message.channel_id
-      |> Message.create(content)
-      |> Error.handle()
-    end
+  def handle(message, parsed) do
+    tz_record = Repo.Timezone.get(message.author.id)
+
+    handle(message, parsed, tz_record)
+  end
+
+  def handle(message, _, nil) do
+    title_section =
+      Component.section("https://cdn.lara.lv/emoji/wave.webp", [
+        Component.text("# Want to ditch timezones?"),
+        Component.text(
+          "I detected times in your message, would you like people to see them in their own timezone?"
+        )
+      ])
+
+    description_text =
+      Component.text(
+        "Don't worry, it's super easy! Just type `/timezone <city>` like `/timezone austin`."
+      )
+
+    footer_text = Component.text("-# Thanks to magic, readers don't even need to do anything!")
+
+    message.channel_id
+    |> Timezoner.Message.create([title_section, description_text, footer_text])
+    |> Error.handle()
+  end
+
+  def handle(message, parsed, tz_record) do
+    tz = tz_record.timezone
+
+    content =
+      parsed
+      |> Enum.sort_by(& &1["end"], :desc)
+      |> Enum.reduce(message.content, &add_timestamp(&1, &2, tz))
+
+    message.channel_id
+    |> Message.create(content)
+    |> Error.handle()
   end
 
   def add_timestamp(date_body, acc, tz) do
@@ -52,7 +82,7 @@ defmodule Timezoner.MessageCreate do
     before_end <> " (#{timestamps})" <> after_end
   end
 
-  defp format(date, grain, tz) do
+  def format(date, grain, tz) do
     case {DateTime.to_date(date) ==
             tz
             |> DateTime.now!()

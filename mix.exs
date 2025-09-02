@@ -19,7 +19,7 @@ defmodule Timezoner.MixProject do
     ]
   end
 
-  defp deps do
+  def deps do
     [
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.0"},

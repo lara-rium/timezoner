@@ -39,14 +39,14 @@ defmodule Timezoner.Interactions.Help do
     |> Error.handle()
   end
 
-  defp title_section do
+  def title_section do
     Component.section("https://cdn.lara.lv/emoji/sos.webp", [
       Component.text("# Timezoner"),
       Component.text("I let you send times and dates that everyone sees in their own timezone.")
     ])
   end
 
-  defp convert_container do
+  def convert_container do
     Component.container([
       Component.text("### Convert a time or date in a message"),
       Component.text(
@@ -61,7 +61,7 @@ defmodule Timezoner.Interactions.Help do
     ])
   end
 
-  defp date_container do
+  def date_container do
     Component.container([
       Component.text("### Send a time or date"),
       Component.text("You can also send a time or date directly by using the command `/date`."),
@@ -72,7 +72,7 @@ defmodule Timezoner.Interactions.Help do
     ])
   end
 
-  defp copy_container do
+  def copy_container do
     Component.container([
       Component.text("### Share in DMs or another server"),
       Component.text(
@@ -87,7 +87,7 @@ defmodule Timezoner.Interactions.Help do
     ])
   end
 
-  defp user_time_container do
+  def user_time_container do
     Component.container([
       Component.text("### Learn what time it is for someone"),
       Component.text(
@@ -100,11 +100,11 @@ defmodule Timezoner.Interactions.Help do
     ])
   end
 
-  defp footer_section do
+  def footer_section do
     Component.text("-# Use the buttons below for more information.")
   end
 
-  defp action_row do
+  def action_row do
     ActionRow.action_row([
       Button.link_button("Homepage", "https://timezoner.lara.lv",
         emoji: %Nostrum.Struct.Emoji{
