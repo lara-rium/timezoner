@@ -6,6 +6,10 @@ defmodule Timezoner.Interactions do
     [Timezoner.Interactions.Help, Timezoner.Interactions.Timezone]
   end
 
+  def command_ids do
+    Application.get_env(:timezoner, :command_ids, %{})
+  end
+
   def register do
     guild_id = Application.get_env(:timezoner, :guild_id)
     commands = Enum.map(commands(), fn cmd -> cmd.command() end)
@@ -16,9 +20,14 @@ defmodule Timezoner.Interactions do
       |> Error.handle()
     end
 
-    commands
-    |> ApplicationCommand.bulk_overwrite_global_commands()
-    |> Error.handle()
+    {:ok, commands_response} =
+      commands
+      |> ApplicationCommand.bulk_overwrite_global_commands()
+      |> Error.handle()
+
+    command_ids = Map.new(commands_response, &{&1.name, &1.id})
+
+    Application.put_env(:timezoner, :command_ids, command_ids)
   end
 
   def handle(interaction) do
