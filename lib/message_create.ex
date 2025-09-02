@@ -12,7 +12,10 @@ defmodule Timezoner.MessageCreate do
       # TODO: delete original message
       tz = Repo.Timezone.get(message.author.id).timezone
 
-      content = Enum.reduce(parsed, message.content, &add_timestamp(&1, &2, tz))
+      content =
+        parsed
+        |> Enum.sort_by(& &1["end"], :desc)
+        |> Enum.reduce(message.content, &add_timestamp(&1, &2, tz))
 
       message.channel_id
       |> Message.create(content)
@@ -23,7 +26,11 @@ defmodule Timezoner.MessageCreate do
   def add_timestamp(date_body, acc, tz) do
     values =
       Enum.reject(
-        [date_body["value"]["value"], date_body["value"]["from"], date_body["value"]["to"]],
+        [
+          date_body["value"]["value"],
+          date_body["value"]["from"]["value"],
+          date_body["value"]["to"]["value"]
+        ],
         &is_nil(&1)
       )
 
@@ -36,12 +43,9 @@ defmodule Timezoner.MessageCreate do
         |> DateTime.from_naive!(tz)
       end)
 
-    # TODO: multiple dates are all fucked up like "1pm 2pm" is "1pm (<t (<t:1756810800:t>):1756807200:t>) 2pm"
     timestamps =
       Enum.map_join(dates, "-", fn date ->
-        format = format(date, grain, tz)
-
-        "<t:#{DateTime.to_unix(date)}:#{format}>"
+        "<t:#{DateTime.to_unix(date)}:#{format(date, grain, tz)}>"
       end)
 
     {before_end, after_end} = String.split_at(acc, date_body["end"])

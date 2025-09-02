@@ -3,7 +3,7 @@
   "tasks": [
     {
       "command": "iex -S mix",
-      "label": "run",
+      "label": "timezoner",
       "presentation": {
         "clear": true,
         "focus": true
