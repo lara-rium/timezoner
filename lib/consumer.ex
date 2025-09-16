@@ -1,25 +1,21 @@
 defmodule Timezoner.Consumer do
   use Nostrum.Consumer
 
-  alias Timezoner.Interactions
-  alias Timezoner.Schedule
+  alias Timezoner.Consumer
 
   def handle_event({:READY, _, _}) do
-    Interactions.register()
-
-    Schedule.UpdateStatus.start()
-    Schedule.UpdateTzWorld.start()
+    Consumer.Ready.handle(nil)
   end
 
   def handle_event({:INTERACTION_CREATE, interaction, _}) do
-    Interactions.handle(interaction)
+    Consumer.InteractionCreate.handle(interaction)
   end
 
   def handle_event({:MESSAGE_CREATE, message, _}) do
-    Timezoner.MessageCreate.handle(message)
+    Consumer.MessageCreate.handle(message)
   end
 
   def handle_event({:MESSAGE_UPDATE, {_, message}, _}) do
-    Timezoner.MessageCreate.handle(message)
+    Consumer.MessageCreate.handle(message)
   end
 end

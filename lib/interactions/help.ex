@@ -5,9 +5,9 @@ defmodule Timezoner.Interactions.Help do
   alias Nostrum.Constants.ApplicationCommandType
   alias Nostrum.Struct.Component.ActionRow
   alias Nostrum.Struct.Component.Button
-  alias Timezoner.Component
+  alias Timezoner.Builder.Component
+  alias Timezoner.Builder.InteractionResponse
   alias Timezoner.Error
-  alias Timezoner.InteractionResponse
 
   @impl Timezoner.Interactions.Behaviour
   def name, do: "help"

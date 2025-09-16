@@ -29,11 +29,4 @@ defmodule Timezoner.Interactions do
 
     Application.put_env(:timezoner, :command_ids, command_ids)
   end
-
-  def handle(interaction) do
-    command =
-      Enum.find(commands(), fn cmd -> cmd.name() == interaction.data.name end)
-
-    command.handle(interaction)
-  end
 end

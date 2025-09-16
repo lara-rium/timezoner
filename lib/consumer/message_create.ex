@@ -1,7 +1,8 @@
-defmodule Timezoner.MessageCreate do
+defmodule Timezoner.Consumer.MessageCreate do
+  @behaviour Timezoner.Consumer.Behaviour
+
   alias Nostrum.Api.Message
-  alias Timezoner.Component
-  alias Timezoner.ConvertTime
+  alias Timezoner.Builder.Component
   alias Timezoner.ConvertTime
   alias Timezoner.Error
   alias Timezoner.Repo
@@ -41,7 +42,7 @@ defmodule Timezoner.MessageCreate do
     footer_text = Component.text("-# Thanks to magic, readers don't even need to do anything!")
 
     message.channel_id
-    |> Timezoner.Message.create([title_section, description_text, footer_text])
+    |> Component.create_message([title_section, description_text, footer_text])
     |> Error.handle()
   end
 

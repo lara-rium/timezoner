@@ -1,4 +1,4 @@
-defmodule Timezoner.InteractionResponse do
+defmodule Timezoner.Builder.InteractionResponse do
   import Bitwise
 
   def channel_message_with_source(components) do

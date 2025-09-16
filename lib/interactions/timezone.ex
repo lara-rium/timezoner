@@ -5,9 +5,9 @@ defmodule Timezoner.Interactions.Timezone do
   alias Nostrum.Api.Interaction
   alias Nostrum.Constants.ApplicationCommandOptionType
   alias Nostrum.Constants.ApplicationCommandType
-  alias Timezoner.Component
+  alias Timezoner.Builder.Component
+  alias Timezoner.Builder.InteractionResponse
   alias Timezoner.Error
-  alias Timezoner.InteractionResponse
   alias Timezoner.Repo
 
   @impl Timezoner.Interactions.Behaviour

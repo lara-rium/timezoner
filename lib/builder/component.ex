@@ -1,4 +1,12 @@
-defmodule Timezoner.Component do
+defmodule Timezoner.Builder.Component do
+  import Bitwise
+
+  alias Nostrum.Api.Message
+
+  def create_message(channel_id, components) do
+    Message.create(channel_id, %{components: components, flags: 1 <<< 15})
+  end
+
   def section(media_url, components) do
     %{
       type: 9,
