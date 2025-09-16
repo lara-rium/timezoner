@@ -17,8 +17,8 @@ defmodule Timezoner.Schedule.Behaviour do
       def handle_cast(:task, _) do
         task()
 
-        10
-        |> :timer.seconds()
+        1
+        |> :timer.hours()
         |> :timer.apply_after(&GenServer.cast/2, [__MODULE__, :task])
 
         {:noreply, nil}

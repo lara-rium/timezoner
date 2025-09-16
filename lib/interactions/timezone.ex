@@ -45,7 +45,10 @@ defmodule Timezoner.Interactions.Timezone do
   end
 
   def response({:ok, %Geocoder.Coords{lat: lat, lon: lon}}, user_id) do
-    {:ok, tz} = TzWorld.timezone_at({lon, lat})
+    {:ok, tz} =
+      {lon, lat}
+      |> TzWorld.timezone_at()
+      |> Error.handle()
 
     Repo.Timezone.insert(user_id, tz)
 

@@ -9,8 +9,8 @@ defmodule Timezoner.Repo.Timezone do
   end
 
   def insert(user_id, tz) do
-    Repo.insert(%__MODULE__{user_id: user_id, timezone: tz},
-      on_conflict: [set: [timezone: tz]],
+    Repo.insert!(%__MODULE__{user_id: user_id, timezone: tz},
+      on_conflict: :replace_all,
       conflict_target: :user_id
     )
   end
