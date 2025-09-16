@@ -7,8 +7,8 @@ defmodule Timezoner.Application do
         Geocoder.Supervisor,
         Timezoner.Repo,
         TzWorld.Backend.DetsWithIndexCache,
-        Timezoner.TzWorldUpdater,
-        Timezoner.StatusUpdater,
+        Timezoner.Schedule.UpdateTzWorld,
+        Timezoner.Schedule.UpdateStatus,
         Timezoner.Consumer
       ],
       strategy: :one_for_one,
