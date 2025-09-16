@@ -1,4 +1,16 @@
 defmodule Timezoner.ConvertTime do
+  def parse(text) do
+    response =
+      HTTPoison.post!(
+        "http://0.0.0.0:8000/parse",
+        {:form, [text: text]},
+        [],
+        hackney: [pool: :default]
+      )
+
+    Jason.decode!(response.body)
+  end
+
   def convert(content, parsed, tz) do
     parsed
     |> Enum.sort_by(& &1["end"], :desc)

@@ -2,14 +2,14 @@ defmodule Timezoner.MessageCreate do
   alias Nostrum.Api.Message
   alias Timezoner.Component
   alias Timezoner.ConvertTime
-  alias Timezoner.Duckling
+  alias Timezoner.ConvertTime
   alias Timezoner.Error
   alias Timezoner.Repo
 
   def handle(message) when message.author.bot, do: :ok
 
   def handle(message) do
-    parsed = Duckling.parse(message.content)
+    parsed = ConvertTime.parse(message.content)
 
     handle(message, parsed)
   end
