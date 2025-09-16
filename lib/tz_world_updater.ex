@@ -9,16 +9,19 @@ defmodule Timezoner.TzWorldUpdater do
 
   @impl GenServer
   def init(_) do
-    send(self(), :update_data)
+    GenServer.cast(__MODULE__, :update)
+
     {:ok, nil}
   end
 
   @impl GenServer
-  def handle_info(:update_data, _) do
-    TzWorld.Downloader.update_release(include_oceans: true)
+  def handle_cast(:update, _) do
+    Mix.Task.run("tz_world.update", ["--include-oceans"])
     DetsWithIndexCache.reload_timezone_data()
 
-    Process.send_after(self(), :update_data, :timer.hours(1))
+    1
+    |> :timer.hours()
+    |> :timer.apply_after(&GenServer.cast/2, [__MODULE__, :update])
 
     {:noreply, nil}
   end

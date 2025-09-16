@@ -14,22 +14,17 @@ defmodule Timezoner.StatusUpdater do
   end
 
   def start_scheduling do
-    GenServer.cast(__MODULE__, :start_scheduling)
+    GenServer.cast(__MODULE__, :update)
   end
 
   @impl GenServer
-  def handle_cast(:start_scheduling, _) do
-    send(self(), :update_status)
-
-    {:noreply, nil}
-  end
-
-  @impl GenServer
-  def handle_info(:update_status, _) do
+  def handle_cast(:update, _) do
     guild_count = Enum.count(GuildCache.all())
     Self.update_status(:online, "for times in #{guild_count} servers!", 3)
 
-    Process.send_after(self(), :update_status, :timer.hours(1))
+    1
+    |> :timer.hours()
+    |> :timer.apply_after(&GenServer.cast/2, [__MODULE__, :update])
 
     {:noreply, nil}
   end

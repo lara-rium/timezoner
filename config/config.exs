@@ -11,8 +11,8 @@ config :timezoner, Timezoner.Repo,
 
 config :nostrum,
   ffmpeg: nil,
-  log_full_events: Mix.env() != :prod,
-  log_dispatch_events: Mix.env() != :prod,
+  # log_full_events: true,
+  # log_dispatch_events: true,
   gateway_intents: [:guilds, :guild_messages, :direct_messages, :message_content]
 
 config :logger, :console,
@@ -20,6 +20,7 @@ config :logger, :console,
   metadata: [:shard, :guild, :channel]
 
 config :disco_log,
+  enable: Mix.env() == :prod,
   otp_app: :timezoner,
   guild_id: "903367565349384202",
   category_id: "1412530342363009135",

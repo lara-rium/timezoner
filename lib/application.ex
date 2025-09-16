@@ -1,17 +1,15 @@
-defmodule Timezoner.Main do
+defmodule Timezoner.Application do
   use Application
 
   def start(_, _) do
-    HTTPoison.start()
-
     Supervisor.start_link(
       [
         Geocoder.Supervisor,
-        Timezoner.Consumer,
         Timezoner.Repo,
-        Timezoner.StatusUpdater,
+        TzWorld.Backend.DetsWithIndexCache,
         Timezoner.TzWorldUpdater,
-        TzWorld.Backend.DetsWithIndexCache
+        Timezoner.StatusUpdater,
+        Timezoner.Consumer
       ],
       strategy: :one_for_one,
       name: __MODULE__
