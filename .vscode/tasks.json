@@ -12,7 +12,7 @@
       "type": "shell"
     },
     {
-      "command": "postgres -D /opt/homebrew/var/postgresql@17",
+      "command": "trap 'pg_ctl -D /opt/homebrew/var/postgresql@17 stop' EXIT; postgres -D /opt/homebrew/var/postgresql@17 & wait",
       "label": "postgres",
       "presentation": {
         "clear": true,
