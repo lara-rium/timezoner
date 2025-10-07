@@ -2,7 +2,7 @@ import Config
 
 config :timezoner,
   ecto_repos: [Timezoner.Repo],
-  guild_id: nil
+  guild_id: 903_367_565_349_384_202
 
 config :timezoner, Timezoner.Repo,
   database: "timezoner_repo",

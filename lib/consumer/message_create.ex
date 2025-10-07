@@ -1,10 +1,10 @@
 defmodule Timezoner.Consumer.MessageCreate do
-  @behaviour Timezoner.Consumer.Behaviour
+  @behaviour Larabot.Consumer
 
+  alias Larabot.Component
+  alias Larabot.Error
   alias Nostrum.Api.Message
-  alias Timezoner.Builder.Component
   alias Timezoner.ConvertTime
-  alias Timezoner.Error
   alias Timezoner.Repo
 
   def handle(message) when message.author.bot, do: :ok

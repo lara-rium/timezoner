@@ -12,7 +12,7 @@
       "type": "shell"
     },
     {
-      "command": "trap 'pg_ctl -D /opt/homebrew/var/postgresql@17 stop' EXIT; postgres -D /opt/homebrew/var/postgresql@17 & wait",
+      "command": "trap '/opt/homebrew/opt/postgresql@18/bin/pg_ctl -D /opt/homebrew/var/postgresql@18 stop' EXIT; /opt/homebrew/opt/postgresql@18/bin/postgres -D /opt/homebrew/var/postgresql@18 & wait",
       "label": "postgres",
       "presentation": {
         "clear": true,
@@ -35,14 +35,24 @@
       "type": "shell"
     },
     {
-      "command": "mix credo --strict",
-      "label": "credo",
+      "command": "mix compile && mix dialyzer && mix credo --strict",
+      "label": "lint",
       "presentation": {
         "clear": true,
         "focus": true
       },
       "problemMatcher": [],
       "type": "shell"
-    }
+    },
+    {
+      "command": "mix deps.update larabot && rm -rf .elixir_ls",
+      "label": "update larabot",
+      "presentation": {
+        "clear": true,
+        "focus": true
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
   ]
 }

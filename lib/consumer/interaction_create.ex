@@ -1,5 +1,5 @@
 defmodule Timezoner.Consumer.InteractionCreate do
-  @behaviour Timezoner.Consumer.Behaviour
+  @behaviour Larabot.Consumer
 
   def handle(interaction) do
     command =

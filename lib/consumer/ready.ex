@@ -1,5 +1,5 @@
 defmodule Timezoner.Consumer.Ready do
-  @behaviour Timezoner.Consumer.Behaviour
+  @behaviour Larabot.Consumer
 
   alias Timezoner.Schedule
 

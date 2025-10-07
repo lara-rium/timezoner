@@ -1,50 +1,20 @@
 defmodule Timezoner.Interactions.Help do
-  @behaviour Timezoner.Interactions.Behaviour
+  use Larabot.Interaction.Help
 
-  alias Nostrum.Api.Interaction
-  alias Nostrum.Constants.ApplicationCommandType
-  alias Nostrum.Struct.Component.ActionRow
-  alias Nostrum.Struct.Component.Button
-  alias Timezoner.Builder.Component
-  alias Timezoner.Builder.InteractionResponse
-  alias Timezoner.Error
+  alias Larabot.Component
 
-  @impl Timezoner.Interactions.Behaviour
-  def name, do: "help"
+  @impl Larabot.Interaction.Help
+  def title, do: "Timezoner"
 
-  @impl Timezoner.Interactions.Behaviour
-  def command do
-    %{
-      name: name(),
-      description: "Get information about the bot",
-      type: ApplicationCommandType.chat_input()
-    }
-  end
+  @impl Larabot.Interaction.Help
+  def description, do: "I let you send times and dates that everyone sees in their own timezone."
 
-  @impl Timezoner.Interactions.Behaviour
-  def handle(interaction) do
-    response =
-      InteractionResponse.channel_message_with_source([
-        title_section(),
-        convert_container(),
-        date_container(),
-        copy_container(),
-        user_time_container(),
-        footer_section(),
-        action_row()
-      ])
+  @impl Larabot.Interaction.Help
+  def components,
+    do: [convert_container(), date_container(), copy_container(), user_time_container()]
 
-    interaction
-    |> Interaction.create_response(response)
-    |> Error.handle()
-  end
-
-  def title_section do
-    Component.section("https://cdn.lara.lv/emoji/sos.webp", [
-      Component.text("# Timezoner"),
-      Component.text("I let you send times and dates that everyone sees in their own timezone.")
-    ])
-  end
+  @impl Larabot.Interaction.Help
+  def homepage, do: "https://timezoner.lara.lv"
 
   def convert_container do
     Component.container([
@@ -97,29 +67,6 @@ defmodule Timezoner.Interactions.Help do
       Component.media_gallery([
         "https://cdn.lara.lv/timezoner/help/placeholder-example.png"
       ])
-    ])
-  end
-
-  def footer_section do
-    Component.text("-# Use the buttons below for more information.")
-  end
-
-  def action_row do
-    ActionRow.action_row([
-      Button.link_button("Homepage", "https://timezoner.lara.lv",
-        emoji: %Nostrum.Struct.Emoji{
-          id: 1_396_299_330_457_178_293,
-          name: "globe_showing_europe_africa",
-          animated: true
-        }
-      ),
-      Button.link_button("Support Server", "https://discord.com/invite/KUMdnjcE97",
-        emoji: %Nostrum.Struct.Emoji{
-          id: 1_396_297_056_750_014_546,
-          name: "wave",
-          animated: true
-        }
-      )
     ])
   end
 end

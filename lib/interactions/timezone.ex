@@ -1,19 +1,17 @@
 # credo:disable-for-next-line Credo.Check.Refactor.ModuleDependencies
 defmodule Timezoner.Interactions.Timezone do
-  @behaviour Timezoner.Interactions.Behaviour
+  @behaviour Larabot.Interaction
 
+  alias Larabot.Component
+  alias Larabot.Error
+  alias Larabot.InteractionResponse
   alias Nostrum.Api.Interaction
   alias Nostrum.Constants.ApplicationCommandOptionType
   alias Nostrum.Constants.ApplicationCommandType
-  alias Timezoner.Builder.Component
-  alias Timezoner.Builder.InteractionResponse
-  alias Timezoner.Error
   alias Timezoner.Repo
 
-  @impl Timezoner.Interactions.Behaviour
   def name, do: "timezone"
 
-  @impl Timezoner.Interactions.Behaviour
   def command do
     option = %{
       name: "city",
@@ -30,7 +28,6 @@ defmodule Timezoner.Interactions.Timezone do
     }
   end
 
-  @impl Timezoner.Interactions.Behaviour
   def handle(interaction) do
     city = List.first(interaction.data.options).value
 

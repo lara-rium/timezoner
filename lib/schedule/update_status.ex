@@ -1,8 +1,10 @@
 defmodule Timezoner.Schedule.UpdateStatus do
-  use Timezoner.Schedule.Behaviour
+  use Larabot.Schedule
 
   alias Nostrum.Api.Self
   alias Nostrum.Cache.GuildCache
+
+  def interval, do: :timer.hours(1)
 
   def task do
     guild_count = Enum.count(GuildCache.all())
