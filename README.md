@@ -1,4 +1,4 @@
-[join the server]: https://discord.com/invite/KUMdnjcE97
+[join the server]: https://discord.lara.lv/
 
 # timezoner
 
